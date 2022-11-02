@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
-import 'package:scidart/numdart.dart';
+import 'package:ml_linalg/linalg.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/document_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/face_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/kyc_sdk_exception.dart';
@@ -79,12 +79,8 @@ class CheckPersonUseCase {
   }
 
   double _getCosineDistance(List<double> firstVector, List<double> secondVector) {
-    final Array2d first = Array2d.fromVector(Array(firstVector), 1);
-    final Array2d second = Array2d.fromVector(Array(secondVector), 1);
-    final Array2d dot = matrixDot(first, second);
-
-    // TODO: need to implements
-
-    return 1;
+    final vector1 = Vector.fromList(firstVector);
+    final vector2 = Vector.fromList(secondVector);
+    return 1 - vector1.dot(vector2) / (vector1.norm() * vector2.norm());
   }
 }

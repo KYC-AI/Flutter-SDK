@@ -333,6 +333,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  ml_linalg:
+    dependency: "direct main"
+    description:
+      name: ml_linalg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "13.10.0"
   mockito:
     dependency: "direct dev"
     description:
@@ -382,13 +389,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  scidart:
-    dependency: "direct main"
+  quiver:
+    dependency: transitive
     description:
-      name: scidart
+      name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2-dev.12"
+    version: "3.1.0"
   shelf:
     dependency: transitive
     description:

@@ -19,8 +19,7 @@ dependencies:
   get_it: 7.2.0
 
   json_serializable: ^6.1.4
-  #numdart: 1.0.0
-  scidart: ^0.0.2-dev.12
+  ml_linalg: 13.10.0
 
   # MobX
 #  mobx: 2.1.1
