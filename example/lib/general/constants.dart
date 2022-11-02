@@ -2,8 +2,8 @@ import 'package:flutter/services.dart';
 
 class Constants {
   // Only for testing
-  static const testApplicantId = 'c4696174-5d22-40bb-98a6-8890b92d9ca8';
-  static const testServer = 'https://kyc-api-stage.treeumapp.net';
+  static const testApplicantId = '133e663f032fbd8f6afd4cb932030d8491ea01d5';
+  static const testServer = 'https://api.kycai.pro/v1.0/';
 
   // list of default orientation
   static const List<DeviceOrientation> orientations = [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown];

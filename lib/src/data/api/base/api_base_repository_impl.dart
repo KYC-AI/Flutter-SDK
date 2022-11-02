@@ -17,6 +17,6 @@ class ApiBaseRepositoryImpl {
   }
 
   String getBaseUrl() {
-    return _configureRepository.applicant.server;
+    return _configureRepository.config.server;
   }
 }

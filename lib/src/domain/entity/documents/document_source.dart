@@ -1,4 +1,0 @@
-enum DocumentSource {
-  file,
-  camera,
-}

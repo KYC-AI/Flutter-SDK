@@ -1,27 +1,41 @@
-import 'dart:typed_data';
-
-import 'package:http/http.dart';
-
 // ignore: depend_on_referenced_packages
+import 'dart:io';
+
 import 'package:meta/meta.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_verification_document_country.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_verification_document_type.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_verification_media_type.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_verification_next_post.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_verification_status_get.dart';
-import 'package:stargaze_kyc_sdk/src/domain/entity/api/api_response.dart';
+import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_check_document.dart';
+import 'package:stargaze_kyc_sdk/src/data/api/responses/face/api_entity_check_face.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_check.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/face/face_check.dart';
 
 @internal
 abstract class ApiVerificationRepository {
-  Future<ApiResponse<ApiEntityVerificationStatusGet>> getStatus();
+  Future<ApiEntityCheckDocument> checkDocumentFile({
+    required File file,
+    required DocumentCode code,
+    required List<DocumentCheck> checks,
+    required int page,
+  });
 
-  Future<ApiResponse<ApiEntityVerificationNextPost>> postNext(int stepId);
+  Future<ApiEntityCheckDocument> checkDocumentUrl({
+    required String documentUrl,
+    required DocumentCode code,
+    required List<DocumentCheck> checks,
+    required int page,
+  });
 
-  Future<ApiResponse<Object>> postMedia(String secret, int stepId, ApiEntityVerificationMediaType mediaType, Uint8List imageBytes);
+  Future<ApiEntityCheckFace> checkFaceBase64({
+    required String base64,
+    required List<FaceCheck> checks,
+  });
 
-  Future<ApiResponse<List<ApiEntityVerificationDocumentCountry>>> getDocumentsCountries(int stepId);
+  Future<ApiEntityCheckFace> checkFaceFile({
+    required File file,
+    required List<FaceCheck> checks,
+  });
 
-  Future<ApiResponse<List<ApiEntityVerificationDocumentType>>> getDocumentsTypes(int stepId, int countryId);
-
-  Future<ApiResponse<StreamedResponse>> postDocument(String secret, int stepId, String page, Uint8List imageBytes);
+  Future<ApiEntityCheckFace> checkFaceUrl({
+    required String faceUrl,
+    required List<FaceCheck> checks,
+  });
 }

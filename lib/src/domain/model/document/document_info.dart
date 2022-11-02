@@ -1,0 +1,3 @@
+class DocumentInfo {
+  // TODO:
+}

@@ -15,13 +15,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2)).whenComplete(() {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => ConfigScreen(),
-        ),
-      );
-    });
+    // Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (BuildContext context) => ConfigScreen(),
+    //     ),
+    //   );
+    // });
   }
 
   @override
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.blue,
       body: Center(
         child: Text(
-          'KYC',
+          'KYCAI.pro',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,

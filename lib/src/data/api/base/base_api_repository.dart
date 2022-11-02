@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -9,8 +8,7 @@ import 'package:http/retry.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/base/api_base_repository_impl.dart';
-import 'package:stargaze_kyc_sdk/src/domain/exception/api_exception.dart';
-import 'package:stargaze_kyc_sdk/src/domain/exception/not_found_exception.dart';
+import 'package:stargaze_kyc_sdk/src/data/api/base/exception/base_backend_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';
 import 'package:stargaze_kyc_sdk/src/general/log_helper.dart';
 
@@ -45,37 +43,22 @@ abstract class BaseApiRepository with LogHelper {
     return baseApiUrl + getBasePath() + apiName;
   }
 
-  Future<ValidateState> validateResponse(http.Response response, {List<int>? passErrorCodes}) async {
-    tLog.d('$tag:${runtimeType.toString()}', 'validateResponse, response code: ${response.statusCode}');
-
-    if (passErrorCodes != null && passErrorCodes.contains(response.statusCode)) {
-      return Future.value(ValidateState.fail);
-    }
-
+  Future<bool> validateResponse(http.Response response) async {
     if (response.statusCode >= 200 && response.statusCode <= 299) {
-      return Future.value(ValidateState.success);
-    } else if (response.statusCode == 400) {
-      return Future.value(ValidateState.fail);
-    } else if (response.statusCode == 404) {
-      throw NotFoundException(
-        applicantId: _configureRepository.applicant.applicantId,
-        response: utf8.decode(response.bodyBytes),
-        url: response.request.toString(),
-      );
+      return Future.value(true);
+    } else if (response.statusCode == 401) {
+      throw BaseBackendException.unauthorized;
+    } else if (response.statusCode == 402) {
+      throw BaseBackendException.paymentRequired;
     } else {
-      throw ApiException(
-        applicantId: _configureRepository.applicant.applicantId,
-        response: utf8.decode(response.bodyBytes),
-        url: response.request.toString(),
-        code: response.statusCode,
-      );
+      throw BaseBackendException.unknown;
     }
   }
 
-  Future<Map<String, String>> prepareHeader({bool excludeAuthorizationHeader = false}) async {
+  Future<Map<String, String>> prepareHeader() async {
     final Map<String, String> headers = <String, String>{};
     headers[HttpHeaders.contentTypeHeader] = 'application/json; charset=utf-8';
-    tLog.d(tag, 'prepareHeader, headers: $headers');
+    headers[HttpHeaders.authorizationHeader] = 'Token ${_configureRepository.config.apiToken}';
     return Future.value(headers);
   }
 
@@ -83,12 +66,10 @@ abstract class BaseApiRepository with LogHelper {
     required RequestType requestType,
     required String url,
     Object? body,
-    List<int>? passErrorCodes,
-    bool excludeAuthorizationHeader = false,
   }) async {
     final uri = Uri.parse(Uri.encodeFull(url));
     http.Response response;
-    final Map<String, String> headers = await prepareHeader(excludeAuthorizationHeader: excludeAuthorizationHeader);
+    final Map<String, String> headers = await prepareHeader();
 
     switch (requestType) {
       case RequestType.get:
@@ -111,7 +92,5 @@ abstract class BaseApiRepository with LogHelper {
     return Future.value(response);
   }
 }
-
-enum ValidateState { success, fail, tokenUpdated }
 
 enum RequestType { get, post, put, patch, delete }

@@ -3,7 +3,7 @@ import 'package:kyc/general/constants.dart';
 class Config {
   String kycUrl = Constants.testServer;
 
-  String applicantId = Constants.testApplicantId;
+  String apiToken = Constants.testApplicantId;
 
   factory Config() {
     return _singleton;
