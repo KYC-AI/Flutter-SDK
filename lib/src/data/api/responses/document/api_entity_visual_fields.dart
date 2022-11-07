@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_field.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_location_face.dart';
 
 part 'api_entity_visual_fields.g.dart';
 

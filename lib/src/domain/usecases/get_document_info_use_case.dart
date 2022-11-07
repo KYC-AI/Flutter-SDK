@@ -1,22 +1,26 @@
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_check.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_info.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/mapper/document_info_mapper.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/api/api_verification_repository.dart';
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
 
 @LazySingleton()
+@internal
 class GetDocumentInfoUseCase {
   final _apiVerificationRepository = getIt<ApiVerificationRepository>();
+  final _documentInfoMapper = getIt<DocumentInfoMapper>();
 
-  Future<DocumentInfo> execute(
+  Future<DocumentInfo> execute({
+    required DocumentCode documentCode,
     File? documentFile,
     String? documentUrl,
-    DocumentCode documentCode,
-  ) async {
-    assert(documentFile == null && documentUrl == null);
+  }) async {
+    assert(documentFile != null || documentUrl != null, 'documentFile or documentUrl should be not null');
 
     final List<DocumentCheck> checks = [
       DocumentCheck.visualFields,
@@ -35,8 +39,6 @@ class GetDocumentInfoUseCase {
         ? await _apiVerificationRepository.checkDocumentFile(file: documentFile, code: documentCode, checks: checks, page: 1)
         : await _apiVerificationRepository.checkDocumentUrl(documentUrl: documentUrl!, code: documentCode, checks: checks, page: 1);
 
-    // TODO: need to parse parameters
-
-    return DocumentInfo();
+    return _documentInfoMapper.map(result.document!);
   }
 }

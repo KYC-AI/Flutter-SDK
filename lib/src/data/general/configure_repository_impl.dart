@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 
-// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/config.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';

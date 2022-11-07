@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
-//import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/config.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';

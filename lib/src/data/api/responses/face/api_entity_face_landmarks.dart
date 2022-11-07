@@ -1,8 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_location_face.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/face/api_entity_face_representation.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/face/api_entity_face_spoofing.dart';
 
 part 'api_entity_face_landmarks.g.dart';
 
@@ -23,7 +20,6 @@ class ApiEntityFaceLandmarks {
 
   @JsonKey(name: 'right_mouth')
   final List<double>? rightMouth;
-
 
   ApiEntityFaceLandmarks({
     required this.leftEye,

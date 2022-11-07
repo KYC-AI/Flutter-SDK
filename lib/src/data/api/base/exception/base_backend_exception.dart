@@ -1,5 +1,7 @@
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/kyc_sdk_exception.dart';
 
+@internal
 enum BaseBackendException implements Exception {
   unknown(msg: 'UNKNOWN'),
   unauthorized(msg: 'Unauthorized'),

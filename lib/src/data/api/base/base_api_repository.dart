@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
-
-// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/base/api_base_repository_impl.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/base/exception/base_backend_exception.dart';
@@ -14,7 +12,7 @@ import 'package:stargaze_kyc_sdk/src/general/log_helper.dart';
 
 @internal
 abstract class BaseApiRepository with LogHelper {
-  static const networkRequestsTimeout = 20; // 20 seconds
+  static const networkRequestsTimeout = 60; // 60 seconds
   static const tag = 'BaseApiRepository';
 
   static const defaultTimeout = Duration(seconds: networkRequestsTimeout);

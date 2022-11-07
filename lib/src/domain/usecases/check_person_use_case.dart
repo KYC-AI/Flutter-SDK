@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:meta/meta.dart';
 import 'package:injectable/injectable.dart';
 import 'package:ml_linalg/linalg.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/document_exception.dart';
@@ -12,6 +13,7 @@ import 'package:stargaze_kyc_sdk/src/domain/repository/api/api_verification_repo
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
 
 @LazySingleton()
+@internal
 class CheckPersonUseCase {
   final _apiVerificationRepository = getIt<ApiVerificationRepository>();
 
@@ -22,8 +24,8 @@ class CheckPersonUseCase {
     File? faceFile,
     String? faceUrl,
   }) async {
-    assert(documentFile != null || documentUrl != null);
-    assert(faceFile != null || faceUrl != null);
+    assert(documentFile != null || documentUrl != null, 'documentFile or documentUrl should be not null');
+    assert(faceFile != null || faceUrl != null, 'faceFile or faceUrl should be not null');
 
     final List<DocumentCheck> documentChecks = [
       DocumentCheck.faceLocation,
@@ -74,8 +76,7 @@ class CheckPersonUseCase {
     // 5. Compare result from 4 and 5 points
     final distance = _getCosineDistance(documentFaceResult.face!.representation!.vector, faceResult.face!.representation!.vector);
 
-    // TODO: need to compare [distance] with some value
-    return false;
+    return distance <= documentFaceResult.face!.representation!.recommendedThreshold;
   }
 
   double _getCosineDistance(List<double> firstVector, List<double> secondVector) {

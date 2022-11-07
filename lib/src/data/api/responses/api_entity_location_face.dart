@@ -1,8 +1,10 @@
+import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api_entity_location_face.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityLocationFace {
   @JsonKey(name: 'top')
   final double top;
