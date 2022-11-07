@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
+
 class DocumentInfo {
   final double? brightness;
-  final String? content;
+  final Image? content;
   final List<DocumentField>? fields;
   final DocumentLocation? location;
   final DocumentFace? face;
@@ -25,7 +27,7 @@ class DocumentFace {
 
   final double right;
 
-  final String? content;
+  final Image? content;
 
   DocumentFace({
     required this.top,

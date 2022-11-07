@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 
-import 'package:meta/meta.dart';
+import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_document.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/mapper/base/mapper.dart';
@@ -9,6 +11,8 @@ import 'package:stargaze_kyc_sdk/src/domain/model/mapper/base/mapper.dart';
 @LazySingleton()
 @internal
 class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
+  final _base64Decoder = Base64Decoder();
+
   @override
   DocumentInfo map(ApiEntityDocument value) {
     DocumentLocation? location;
@@ -30,7 +34,7 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
         bottom: value.face!.location.bottom,
         left: value.face!.location.left,
         right: value.face!.location.right,
-        content: value.face!.content,
+        content: value.face!.content != null ? Image.memory(_base64Decoder.convert(value.face!.content!)) : null,
       );
     }
 
@@ -130,7 +134,7 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
 
     return DocumentInfo(
       brightness: value.brightness,
-      content: value.content,
+      content: value.content != null ? Image.memory(_base64Decoder.convert(value.content!)) : null,
       fields: fields,
       location: location,
       face: face,
