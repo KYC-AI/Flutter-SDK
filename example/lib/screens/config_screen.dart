@@ -187,6 +187,25 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
+                            Text('Check UA Foreign Passport'),
+                          ],
+                        ),
+                        onPressed: () {
+                          if (_screenStatus == ScreenStatus.content) {
+                            _checkUaForeignPassport();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
                             Text('Check Face'),
                           ],
                         ),
@@ -243,6 +262,26 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.config;
       });
     });
+  }
+
+  Future<void> _checkUaForeignPassport() async {
+    final XFile? image = await _takePhoto();
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentInProgress;
+      });
+
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaForeignPassport, page: 1, documentFile: File(image.path)).then((value) {
+        _openDocumentInfo(value);
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
   }
 
   Future<void> _checkUaIdCardPage1() async {

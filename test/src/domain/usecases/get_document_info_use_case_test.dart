@@ -6,78 +6,100 @@ import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
 
 void main() {
-  group('GetDocumentInfoUseCase page 1', () {
+  group('uaForeignPassport', () {
     test('success from file', () async {
       final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_1_page_1.jpg');
+      final fileDocument = File(dir + '/test/resources/ua_foreign_passport_1.jpg');
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentCode.uaForeignPassport, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
       expect(result.brightness, isNot(null));
       expect(result.content, isNot(null));
       expect(result.fields, isNot(null));
-      expect(result.fields!.length, equals(10));
-      expect(result.location, isNot(null));
-      expect(result.face, isNot(null));
-    });
-
-    test('success from file', () async {
-      final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_2_page_1.jpg');
-
-      // test
-      final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
-
-      // check
-      expect(result, isNot(null));
-      expect(result.brightness, isNot(null));
-      expect(result.content, isNot(null));
-      expect(result.fields, isNot(null));
-      expect(result.fields!.length, equals(10));
-      expect(result.location, isNot(null));
-      expect(result.face, isNot(null));
-    });
-
-    test('success from url', () async {
-      final urlDocument = 'https://beztabu.net/uploads/1200x670_DIR/media_news/2017/11/1264c0bc14a61e045be7791df0272e85e68d8b9a.jpg';
-
-      // test
-      final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentUrl: urlDocument);
-
-      // check
-      expect(result, isNot(null));
-      expect(result.brightness, isNot(null));
-      expect(result.content, isNot(null));
-      expect(result.fields, isNot(null));
-      expect(result.fields!.length, equals(10));
+      expect(result.fields!.length, equals(13));
       expect(result.location, isNot(null));
       expect(result.face, isNot(null));
     });
   });
 
-  group('GetDocumentInfoUseCase page 2', () {
-    test('success from file', () async {
-      final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_3_page_2.jpg');
+  group('uaIdCard', () {
+    group('GetDocumentInfoUseCase page 1', () {
+      test('success from file', () async {
+        final dir = Directory.current.path;
+        final fileDocument = File(dir + '/test/resources/ua_id_card_1_page_1.jpg');
 
-      // test
-      final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 2, documentFile: fileDocument);
+        // test
+        final underTest = getIt<GetDocumentInfoUseCase>();
+        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
 
-      // check
-      expect(result, isNot(null));
-      expect(result.brightness, isNot(null));
-      expect(result.content, isNot(null));
-      expect(result.fields, isNot(null));
-      expect(result.fields!.length, equals(5));
-      expect(result.location, isNot(null));
-      expect(result.face, equals(null));
+        // check
+        expect(result, isNot(null));
+        expect(result.brightness, isNot(null));
+        expect(result.content, isNot(null));
+        expect(result.fields, isNot(null));
+        expect(result.fields!.length, equals(10));
+        expect(result.location, isNot(null));
+        expect(result.face, isNot(null));
+      });
+
+      test('success from file', () async {
+        final dir = Directory.current.path;
+        final fileDocument = File(dir + '/test/resources/ua_id_card_2_page_1.jpg');
+
+        // test
+        final underTest = getIt<GetDocumentInfoUseCase>();
+        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
+
+        // check
+        expect(result, isNot(null));
+        expect(result.brightness, isNot(null));
+        expect(result.content, isNot(null));
+        expect(result.fields, isNot(null));
+        expect(result.fields!.length, equals(10));
+        expect(result.location, isNot(null));
+        expect(result.face, isNot(null));
+      });
+
+      test('success from url', () async {
+        final urlDocument = 'https://beztabu.net/uploads/1200x670_DIR/media_news/2017/11/1264c0bc14a61e045be7791df0272e85e68d8b9a.jpg';
+
+        // test
+        final underTest = getIt<GetDocumentInfoUseCase>();
+        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentUrl: urlDocument);
+
+        // check
+        expect(result, isNot(null));
+        expect(result.brightness, isNot(null));
+        expect(result.content, isNot(null));
+        expect(result.fields, isNot(null));
+        expect(result.fields!.length, equals(10));
+        expect(result.location, isNot(null));
+        expect(result.face, isNot(null));
+      });
+    });
+
+    group('GetDocumentInfoUseCase page 2', () {
+      test('success from file', () async {
+        final dir = Directory.current.path;
+        final fileDocument = File(dir + '/test/resources/ua_id_card_3_page_2.jpg');
+
+        // test
+        final underTest = getIt<GetDocumentInfoUseCase>();
+        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 2, documentFile: fileDocument);
+
+        // check
+        expect(result, isNot(null));
+        expect(result.brightness, isNot(null));
+        expect(result.content, isNot(null));
+        expect(result.fields, isNot(null));
+        expect(result.fields!.length, equals(5));
+        expect(result.location, isNot(null));
+        expect(result.face, equals(null));
+      });
     });
   });
 }
