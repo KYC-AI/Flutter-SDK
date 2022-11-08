@@ -246,7 +246,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   }
 
   Future<void> _checkUaIdCardPage1() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _takePhoto();
 
     if (image != null) {
       setState(() {
@@ -266,7 +266,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   }
 
   Future<void> _checkUaIdCardPage2() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _takePhoto();
 
     if (image != null) {
       setState(() {
@@ -286,7 +286,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   }
 
   Future<void> _checkFace() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _takePhoto();
 
     if (image != null) {
       setState(() {
@@ -326,6 +326,64 @@ class _ConfigScreenState extends State<ConfigScreen> {
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
+    );
+  }
+
+  Future<XFile?> _takePhoto() async {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              if (index == 1) {
+                return Container(
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Select File'),
+                        ],
+                      ),
+                      onPressed: () async {
+                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                        Navigator.pop(context, image);
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return Container(
+                  margin: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 8),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Make a photo'),
+                        ],
+                      ),
+                      onPressed: () async {
+                        final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+                        Navigator.pop(context, image);
+                      },
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }
