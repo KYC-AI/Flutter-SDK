@@ -78,9 +78,10 @@ class KycSdk {
 
   Future<DocumentInfo> getDocumentInfo({
     required DocumentCode documentCode,
+    required int page,
     File? documentFile,
     String? documentUrl,
   }) {
-    return _getDocumentInfoUseCase.execute(documentCode: documentCode, documentFile: documentFile, documentUrl: documentUrl);
+    return _getDocumentInfoUseCase.execute(documentCode: documentCode, page: page, documentFile: documentFile, documentUrl: documentUrl);
   }
 }

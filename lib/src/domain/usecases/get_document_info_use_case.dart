@@ -19,6 +19,7 @@ class GetDocumentInfoUseCase {
 
   Future<DocumentInfo> execute({
     required DocumentCode documentCode,
+    required int page,
     File? documentFile,
     String? documentUrl,
   }) async {
@@ -38,14 +39,14 @@ class GetDocumentInfoUseCase {
 
     // Get document info
     final result = documentFile != null
-        ? await _apiVerificationRepository.checkDocumentFile(file: documentFile, code: documentCode, checks: checks, page: 1)
-        : await _apiVerificationRepository.checkDocumentUrl(documentUrl: documentUrl!, code: documentCode, checks: checks, page: 1);
+        ? await _apiVerificationRepository.checkDocumentFile(file: documentFile, code: documentCode, checks: checks, page: page)
+        : await _apiVerificationRepository.checkDocumentUrl(documentUrl: documentUrl!, code: documentCode, checks: checks, page: page);
 
     final DocumentException documentStatus = DocumentException.values.firstWhere((element) => element.code == result.status);
     if (DocumentException.ok != documentStatus) {
       throw documentStatus;
     }
-    if (result.document == null || result.document!.face == null || result.document!.face!.content == null) {
+    if (result.document == null) {
       throw KycSdkException.unknown;
     }
 

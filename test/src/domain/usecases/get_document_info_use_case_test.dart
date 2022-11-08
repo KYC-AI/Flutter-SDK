@@ -6,14 +6,14 @@ import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
 
 void main() {
-  group('GetDocumentInfoUseCase', () {
+  group('GetDocumentInfoUseCase page 1', () {
     test('success from file', () async {
       final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_1.jpg');
+      final fileDocument = File(dir + '/test/resources/ua_id_card_1_page_1.jpg');
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
@@ -27,11 +27,11 @@ void main() {
 
     test('success from file', () async {
       final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_2.jpg');
+      final fileDocument = File(dir + '/test/resources/ua_id_card_2_page_1.jpg');
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
@@ -48,7 +48,7 @@ void main() {
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, documentUrl: urlDocument);
+      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentUrl: urlDocument);
 
       // check
       expect(result, isNot(null));
@@ -58,6 +58,26 @@ void main() {
       expect(result.fields!.length, equals(10));
       expect(result.location, isNot(null));
       expect(result.face, isNot(null));
+    });
+  });
+
+  group('GetDocumentInfoUseCase page 2', () {
+    test('success from file', () async {
+      final dir = Directory.current.path;
+      final fileDocument = File(dir + '/test/resources/ua_id_card_3_page_2.jpg');
+
+      // test
+      final underTest = getIt<GetDocumentInfoUseCase>();
+      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 2, documentFile: fileDocument);
+
+      // check
+      expect(result, isNot(null));
+      expect(result.brightness, isNot(null));
+      expect(result.content, isNot(null));
+      expect(result.fields, isNot(null));
+      expect(result.fields!.length, equals(5));
+      expect(result.location, isNot(null));
+      expect(result.face, equals(null));
     });
   });
 }

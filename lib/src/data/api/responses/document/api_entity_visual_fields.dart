@@ -35,6 +35,21 @@ class ApiEntityVisualFields {
   @JsonKey(name: 'gender')
   final ApiEntityField? gender;
 
+  @JsonKey(name: 'issue_date')
+  final ApiEntityField? issueDate;
+
+  @JsonKey(name: 'authority')
+  final ApiEntityField? authority;
+
+  @JsonKey(name: 'tax_number')
+  final ApiEntityField? taxNumber;
+
+  @JsonKey(name: 'place_of_birth_uk')
+  final ApiEntityField? placeOfBirthUk;
+
+  @JsonKey(name: 'place_of_birth_en')
+  final ApiEntityField? placeOfBirthEn;
+
   ApiEntityVisualFields({
     required this.firstNameUk,
     required this.firstNameEn,
@@ -46,6 +61,11 @@ class ApiEntityVisualFields {
     required this.dob,
     required this.expirationDate,
     required this.gender,
+    required this.issueDate,
+    required this.authority,
+    required this.taxNumber,
+    required this.placeOfBirthUk,
+    required this.placeOfBirthEn,
   });
 
   factory ApiEntityVisualFields.fromJson(Map<String, dynamic> json) => _$ApiEntityVisualFieldsFromJson(json);

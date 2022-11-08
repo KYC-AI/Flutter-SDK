@@ -11,7 +11,7 @@ void main() {
   group('checkDocumentFile', () {
     test('success', () async {
       final dir = Directory.current.path;
-      final file = File(dir + '/test/resources/ua_id_card_1.jpg');
+      final file = File(dir + '/test/resources/ua_id_card_1_page_1.jpg');
 
       // test
       final underTest = getIt<ApiVerificationRepository>();

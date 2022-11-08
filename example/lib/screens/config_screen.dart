@@ -148,12 +148,31 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Text('Check UA ID card'),
+                            Text('Check UA ID card page 1'),
                           ],
                         ),
                         onPressed: () {
                           if (_screenStatus == ScreenStatus.content) {
-                            _checkUaIdCard();
+                            _checkUaIdCardPage1();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text('Check UA ID card page 2'),
+                          ],
+                        ),
+                        onPressed: () {
+                          if (_screenStatus == ScreenStatus.content) {
+                            _checkUaIdCardPage2();
                           }
                         },
                       ),
@@ -206,7 +225,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
     });
   }
 
-  Future<void> _checkUaIdCard() async {
+  Future<void> _checkUaIdCardPage1() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
@@ -214,7 +233,27 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.contentInProgress;
       });
 
-      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, documentFile: File(image.path)).then((value) {
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, page: 1, documentFile: File(image.path)).then((value) {
+        _openDocumentInfo(value);
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
+  }
+
+  Future<void> _checkUaIdCardPage2() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentInProgress;
+      });
+
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, page: 2, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');

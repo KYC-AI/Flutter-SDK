@@ -47,6 +47,23 @@ ApiEntityVisualFields _$ApiEntityVisualFieldsFromJson(
       gender: json['gender'] == null
           ? null
           : ApiEntityField.fromJson(json['gender'] as Map<String, dynamic>),
+      issueDate: json['issue_date'] == null
+          ? null
+          : ApiEntityField.fromJson(json['issue_date'] as Map<String, dynamic>),
+      authority: json['authority'] == null
+          ? null
+          : ApiEntityField.fromJson(json['authority'] as Map<String, dynamic>),
+      taxNumber: json['tax_number'] == null
+          ? null
+          : ApiEntityField.fromJson(json['tax_number'] as Map<String, dynamic>),
+      placeOfBirthUk: json['place_of_birth_uk'] == null
+          ? null
+          : ApiEntityField.fromJson(
+              json['place_of_birth_uk'] as Map<String, dynamic>),
+      placeOfBirthEn: json['place_of_birth_en'] == null
+          ? null
+          : ApiEntityField.fromJson(
+              json['place_of_birth_en'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ApiEntityVisualFieldsToJson(
@@ -62,4 +79,9 @@ Map<String, dynamic> _$ApiEntityVisualFieldsToJson(
       'dob': instance.dob,
       'expiration_date': instance.expirationDate,
       'gender': instance.gender,
+      'issue_date': instance.issueDate,
+      'authority': instance.authority,
+      'tax_number': instance.taxNumber,
+      'place_of_birth_uk': instance.placeOfBirthUk,
+      'place_of_birth_en': instance.placeOfBirthEn,
     };

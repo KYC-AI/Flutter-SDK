@@ -9,7 +9,7 @@ void main() {
   group('CheckPersonUseCase', () {
     test('success from files 1', () async {
       final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_1.jpg');
+      final fileDocument = File(dir + '/test/resources/ua_id_card_1_page_1.jpg');
       final fileFace = File(dir + '/test/resources/ua_id_card_face_1.jpg');
 
       // test
@@ -22,7 +22,7 @@ void main() {
 
     test('success from files 2', () async {
       final dir = Directory.current.path;
-      final fileDocument = File(dir + '/test/resources/ua_id_card_2.jpg');
+      final fileDocument = File(dir + '/test/resources/ua_id_card_2_page_1.jpg');
       final fileFace = File(dir + '/test/resources/ua_id_card_face_2.jpg');
 
       // test

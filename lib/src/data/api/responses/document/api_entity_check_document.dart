@@ -30,15 +30,3 @@ class ApiEntityCheckDocument {
 
   Map<String, dynamic> toJson() => _$ApiEntityCheckDocumentToJson(this);
 }
-
-// class ApiEntityDocument
-// {
-//   @JsonKey(name: 'fake', defaultValue: '')
-//   final String fake;
-//
-//   @JsonKey(name: 'brightness', defaultValue: 0.0)
-//   final String brightness;
-//
-//   @JsonKey(name: 'content', defaultValue: '')
-//   final String content;
-// }

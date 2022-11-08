@@ -130,6 +130,51 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
           language: DocumentFiledLanguage.uk,
         ));
       }
+
+      if (value.visualFields!.issueDate != null) {
+        fields.add(DocumentField(
+          key: 'issueDate',
+          value: value.visualFields!.issueDate!.value,
+          confidence: value.visualFields!.issueDate!.confidence,
+          language: DocumentFiledLanguage.none,
+        ));
+      }
+
+      if (value.visualFields!.authority != null) {
+        fields.add(DocumentField(
+          key: 'authority',
+          value: value.visualFields!.authority!.value,
+          confidence: value.visualFields!.authority!.confidence,
+          language: DocumentFiledLanguage.none,
+        ));
+      }
+
+      if (value.visualFields!.taxNumber != null) {
+        fields.add(DocumentField(
+          key: 'taxNumber',
+          value: value.visualFields!.taxNumber!.value,
+          confidence: value.visualFields!.taxNumber!.confidence,
+          language: DocumentFiledLanguage.none,
+        ));
+      }
+
+      if (value.visualFields!.placeOfBirthUk != null) {
+        fields.add(DocumentField(
+          key: 'placeOfBirthUk',
+          value: value.visualFields!.placeOfBirthUk!.value,
+          confidence: value.visualFields!.placeOfBirthUk!.confidence,
+          language: DocumentFiledLanguage.uk,
+        ));
+      }
+
+      if (value.visualFields!.placeOfBirthEn != null) {
+        fields.add(DocumentField(
+          key: 'placeOfBirthEn',
+          value: value.visualFields!.placeOfBirthEn!.value,
+          confidence: value.visualFields!.placeOfBirthEn!.confidence,
+          language: DocumentFiledLanguage.en,
+        ));
+      }
     }
 
     return DocumentInfo(
