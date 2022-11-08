@@ -1,4 +1,5 @@
 enum DocumentCode {
+  usaPassportCard(country: 'USA', document: 'Passport card', code: 'us_pc'),
   uaIdCard(country: 'Ukraine', document: 'ID card', code: 'ua_id'),
   uaForeignPassport(country: 'Ukraine', document: 'Foreign passport', code: 'ua_fp');
   // geIdCard(country: 'Georgia', document: 'ID card', code: 'ge_id'),

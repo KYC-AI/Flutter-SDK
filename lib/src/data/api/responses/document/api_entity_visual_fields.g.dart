@@ -64,6 +64,10 @@ ApiEntityVisualFields _$ApiEntityVisualFieldsFromJson(
           ? null
           : ApiEntityField.fromJson(
               json['place_of_birth_en'] as Map<String, dynamic>),
+      nationalityEn: json['nationality_en'] == null
+          ? null
+          : ApiEntityField.fromJson(
+              json['nationality_en'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ApiEntityVisualFieldsToJson(
@@ -84,4 +88,5 @@ Map<String, dynamic> _$ApiEntityVisualFieldsToJson(
       'tax_number': instance.taxNumber,
       'place_of_birth_uk': instance.placeOfBirthUk,
       'place_of_birth_en': instance.placeOfBirthEn,
+      'nationality_en': instance.nationalityEn,
     };

@@ -7,6 +7,26 @@ import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependenci
 
 void main() {
   group('uaForeignPassport', () {
+    test('success from file page 1', () async {
+      final dir = Directory.current.path;
+      final fileDocument = File(dir + '/test/resources/usa_passport_card_1_page_1.jpg');
+
+      // test
+      final underTest = getIt<GetDocumentInfoUseCase>();
+      final result = await underTest.execute(documentCode: DocumentCode.usaPassportCard, page: 1, documentFile: fileDocument);
+
+      // check
+      expect(result, isNot(null));
+      expect(result.brightness, isNot(null));
+      expect(result.content, isNot(null));
+      expect(result.fields, isNot(null));
+      expect(result.fields!.length, equals(8));
+      expect(result.location, isNot(null));
+      expect(result.face, isNot(null));
+    });
+  });
+
+  group('uaForeignPassport', () {
     test('success from file', () async {
       final dir = Directory.current.path;
       final fileDocument = File(dir + '/test/resources/ua_foreign_passport_1.jpg');

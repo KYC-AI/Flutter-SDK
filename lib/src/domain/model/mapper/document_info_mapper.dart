@@ -175,6 +175,15 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
           language: DocumentFiledLanguage.en,
         ));
       }
+
+      if (value.visualFields!.nationalityEn != null) {
+        fields.add(DocumentField(
+          key: 'nationalityEn',
+          value: value.visualFields!.nationalityEn!.value,
+          confidence: value.visualFields!.nationalityEn!.confidence,
+          language: DocumentFiledLanguage.en,
+        ));
+      }
     }
 
     return DocumentInfo(

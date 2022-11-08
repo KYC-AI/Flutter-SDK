@@ -149,6 +149,25 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
+                            Text('Check USA Passport Card page 1'),
+                          ],
+                        ),
+                        onPressed: () {
+                          if (_screenStatus == ScreenStatus.content) {
+                            _checkUsaPassportCardPage1();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8, top: 48, right: 8, bottom: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
                             Text('Check UA ID card page 1'),
                           ],
                         ),
@@ -199,7 +218,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 8),
+                    margin: const EdgeInsets.only(left: 8, top: 48, right: 8, bottom: 8),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
                       child: ElevatedButton(
@@ -222,7 +241,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             ),
             if (_screenStatus == ScreenStatus.contentInProgress) ...[
               Container(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.5),
                 child: const Center(
                   child: SizedBox(
                     width: 46,
@@ -273,6 +292,26 @@ class _ConfigScreenState extends State<ConfigScreen> {
       });
 
       _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaForeignPassport, page: 1, documentFile: File(image.path)).then((value) {
+        _openDocumentInfo(value);
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
+  }
+
+  Future<void> _checkUsaPassportCardPage1() async {
+    final XFile? image = await _takePhoto();
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentInProgress;
+      });
+
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.usaPassportCard, page: 1, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');

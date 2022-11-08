@@ -50,6 +50,9 @@ class ApiEntityVisualFields {
   @JsonKey(name: 'place_of_birth_en')
   final ApiEntityField? placeOfBirthEn;
 
+  @JsonKey(name: 'nationality_en')
+  final ApiEntityField? nationalityEn;
+
   ApiEntityVisualFields({
     required this.firstNameUk,
     required this.firstNameEn,
@@ -66,6 +69,7 @@ class ApiEntityVisualFields {
     required this.taxNumber,
     required this.placeOfBirthUk,
     required this.placeOfBirthEn,
+    required this.nationalityEn,
   });
 
   factory ApiEntityVisualFields.fromJson(Map<String, dynamic> json) => _$ApiEntityVisualFieldsFromJson(json);
