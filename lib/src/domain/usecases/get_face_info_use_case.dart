@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:stargaze_kyc_sdk/src/domain/exception/face_exception.dart';
+import 'package:stargaze_kyc_sdk/src/domain/exception/kyc_sdk_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_check.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/mapper/face_info_mapper.dart';
@@ -34,6 +36,14 @@ class GetFaceInfoUseCase {
     final result = faceFile != null
         ? await _apiVerificationRepository.checkFaceFile(file: faceFile, checks: checks)
         : await _apiVerificationRepository.checkFaceUrl(faceUrl: faceUrl!, checks: checks);
+
+    final FaceException documentFaceStatus = FaceException.values.firstWhere((element) => element.code == result.status);
+    if (FaceException.ok != documentFaceStatus) {
+      throw documentFaceStatus;
+    }
+    if (result.face == null || result.face!.representation == null) {
+      throw KycSdkException.unknown;
+    }
 
     return _faceInfoMapper.map(result.face!);
   }

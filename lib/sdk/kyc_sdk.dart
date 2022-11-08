@@ -23,9 +23,9 @@ class KycSdk {
 
   final Config config;
 
-  final _checkPersonUseCase = getIt<CheckPersonUseCase>();
-  final _getDocumentInfoUseCase = getIt<GetDocumentInfoUseCase>();
-  final _getFaceInfoUseCase = getIt<GetFaceInfoUseCase>();
+  late final _checkPersonUseCase;
+  late final _getDocumentInfoUseCase;
+  late final _getFaceInfoUseCase;
 
   Future<void> initialize() async {
     try {
@@ -45,6 +45,10 @@ class KycSdk {
 
     final configureRepository = getIt<ConfigureRepository>();
     configureRepository.initialize(config: config);
+
+    _checkPersonUseCase = getIt<CheckPersonUseCase>();
+    _getDocumentInfoUseCase = getIt<GetDocumentInfoUseCase>();
+    _getFaceInfoUseCase = getIt<GetFaceInfoUseCase>();
 
     return Future.value();
   }

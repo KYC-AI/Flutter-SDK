@@ -1,178 +1,251 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:kyc/config.dart';
-// import 'package:kyc/screens/step_screen.dart';
-// import 'package:stargaze_kyc_sdk/stargaze_kyc_sdk.dart' as kyc_sdk;
-//
-// class ConfigScreen extends StatefulWidget {
-//   static const tag = 'SplashScreen';
-//
-//   @override
-//   _ConfigScreenState createState() {
-//     return _ConfigScreenState();
-//   }
-// }
-//
-// class _ConfigScreenState extends State<ConfigScreen> {
-//   final _config = Config();
-//   final _urlController = TextEditingController();
-//   final _urlFocusNode = FocusNode();
-//   final _applicantController = TextEditingController();
-//   final _applicantFocusNode = FocusNode();
-//
-//   bool _connecting = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _urlController.text = _config.kycUrl;
-//     _applicantController.text = _config.apiToken;
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Container(
-//           margin: const EdgeInsets.all(16),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: [
-//               Container(
-//                 margin: const EdgeInsets.all(8),
-//                 alignment: Alignment.center,
-//                 child: const Text(
-//                   'Please fill next fields to be able use KYCAI',
-//                   style: TextStyle(fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
-//                 child: const Text('KYCAI server url:'),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-//                 child: CupertinoTextField(
-//                   controller: _urlController,
-//                   focusNode: _urlFocusNode,
-//                 ),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
-//                 child: const Text('KYCAI api token:'),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-//                 child: CupertinoTextField(
-//                   controller: _applicantController,
-//                   focusNode: _applicantFocusNode,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//       floatingActionButton: SizedBox(
-//         width: MediaQuery.of(context).size.width / 2,
-//         child: ElevatedButton(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               const Text('Connect'),
-//               if (_connecting) ...[
-//                 Container(
-//                   margin: const EdgeInsets.only(left: 16),
-//                   width: 16,
-//                   height: 16,
-//                   child: const CircularProgressIndicator(
-//                     color: Colors.white,
-//                     strokeWidth: 2,
-//                   ),
-//                 ),
-//               ],
-//             ],
-//           ),
-//           onPressed: () {
-//             if (!_connecting) {
-//               _connect();
-//             }
-//           },
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Future<void> _connect() async {
-//     setState(() {
-//       _connecting = true;
-//     });
-//
-//     _urlFocusNode.unfocus();
-//     _applicantFocusNode.unfocus();
-//
-//     final apiToken = _applicantController.text;
-//     _config.apiToken = apiToken;
-//
-//     final kycUrl = _urlController.text;
-//     _config.kycUrl = kycUrl;
-//
-//     final kyc_sdk.KycSdk _kycSdk = kyc_sdk.KycSdk(applicant: kyc_sdk.Config(apiToken: apiToken, server: kycUrl));
-//     await _kycSdk.initialize();
-//     // _kycSdk.checkStatus().then((value) {
-//     //   switch (value) {
-//     //     case kyc_sdk.KycStepStatus.verificationNew:
-//     //       _openStepScreen();
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.verificationInProgress:
-//     //       _openStepScreen();
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.verificationApproved:
-//     //       _openStepScreen();
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.verificationApplicantFiled:
-//     //       _showToast('KycStepStatus.verificationApplicantFiled');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.verificationCanceled:
-//     //       _showToast('KycStepStatus.verificationCanceled');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.errorKyc:
-//     //       _showToast('KycStepStatus.errorKyc');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.errorConnection:
-//     //       _showToast('KycStepStatus.errorConnection');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.errorGeneral:
-//     //       _showToast('KycStepStatus.errorGeneral');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.errorStepNotSupported:
-//     //       _showToast('KycStepStatus.errorStepNotSupported');
-//     //       break;
-//     //     case kyc_sdk.KycStepStatus.errorExpired:
-//     //       _showToast('KycStepStatus.errorExpired');
-//     //       break;
-//     //   }
-//     // }).whenComplete(() {
-//     //   setState(() {
-//     //     _connecting = false;
-//     //   });
-//     // });
-//   }
-//
-//   void _openStepScreen() {
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (BuildContext context) => StepScreen(),
-//       ),
-//     );
-//   }
-//
-//   void _showToast(String message) {
-//     Fluttertoast.showToast(
-//       msg: message,
-//       toastLength: Toast.LENGTH_SHORT,
-//       gravity: ToastGravity.CENTER,
-//     );
-//   }
-// }
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kyc/general/constants.dart';
+import 'package:kyc/screens/document_info_screen.dart';
+import 'package:stargaze_kyc_sdk/stargaze_kyc_sdk.dart' as kyc_sdk;
+
+class ConfigScreen extends StatefulWidget {
+  static const tag = 'SplashScreen';
+
+  @override
+  _ConfigScreenState createState() {
+    return _ConfigScreenState();
+  }
+}
+
+class _ConfigScreenState extends State<ConfigScreen> {
+  kyc_sdk.Config _config = kyc_sdk.Config(apiToken: Constants.apiToken, server: Constants.server);
+  late final kyc_sdk.KycSdk _kycSdk;
+
+  final _serverController = TextEditingController();
+  final _urlFocusNode = FocusNode();
+  final _apiTokenController = TextEditingController();
+  final _applicantFocusNode = FocusNode();
+  final _picker = ImagePicker();
+
+  ScreenStatus _screenStatus = ScreenStatus.config;
+
+  @override
+  void initState() {
+    super.initState();
+    _serverController.text = _config.server;
+    _apiTokenController.text = _config.apiToken;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    switch (_screenStatus) {
+      case ScreenStatus.config:
+      case ScreenStatus.configInProgress:
+        return _buildConnect();
+      case ScreenStatus.content:
+      case ScreenStatus.contentInProgress:
+        return _buildContent();
+    }
+  }
+
+  Widget _buildConnect() {
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                margin: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Please fill next fields to be able use KYCAI',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
+                child: const Text('KYCAI server url:'),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                child: CupertinoTextField(
+                  controller: _serverController,
+                  focusNode: _urlFocusNode,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 8, top: 16, right: 8, bottom: 8),
+                child: const Text('KYCAI api token:'),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                child: CupertinoTextField(
+                  controller: _apiTokenController,
+                  focusNode: _applicantFocusNode,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        width: MediaQuery.of(context).size.width / 2,
+        child: ElevatedButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Connect'),
+              if (_screenStatus == ScreenStatus.configInProgress) ...[
+                Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  width: 16,
+                  height: 16,
+                  child: const CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                ),
+              ],
+            ],
+          ),
+          onPressed: () {
+            if (_screenStatus != ScreenStatus.configInProgress) {
+              _connect();
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Please select action',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8, top: 48, right: 8, bottom: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text('Check UA ID card'),
+                          ],
+                        ),
+                        onPressed: () {
+                          if (_screenStatus == ScreenStatus.content) {
+                            _checkUaIdCard();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_screenStatus == ScreenStatus.contentInProgress) ...[
+              Container(
+                color: Colors.black.withOpacity(0.1),
+                child: const Center(
+                  child: SizedBox(
+                    width: 46,
+                    height: 46,
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _connect() async {
+    setState(() {
+      _screenStatus = ScreenStatus.configInProgress;
+    });
+
+    _urlFocusNode.unfocus();
+    _applicantFocusNode.unfocus();
+
+    _config = kyc_sdk.Config(apiToken: _apiTokenController.text, server: _serverController.text);
+
+    _kycSdk = kyc_sdk.KycSdk(config: _config);
+    await _kycSdk.initialize().then((value) {
+      setState(() {
+        _screenStatus = ScreenStatus.content;
+      });
+    }).onError((error, stackTrace) {
+      _showToast('Error during SDK initialization');
+      setState(() {
+        _screenStatus = ScreenStatus.config;
+      });
+    });
+  }
+
+  Future<void> _checkUaIdCard() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentInProgress;
+      });
+
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, documentFile: File(image.path)).then((value) {
+        _openDocumentInfo(value);
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
+  }
+
+  void _openDocumentInfo(kyc_sdk.DocumentInfo info) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => DocumentInfoScreen(documentInfo: info),
+      ),
+    );
+  }
+
+  void _showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
+  }
+}
+
+enum ScreenStatus {
+  config,
+  configInProgress,
+  content,
+  contentInProgress,
+}
