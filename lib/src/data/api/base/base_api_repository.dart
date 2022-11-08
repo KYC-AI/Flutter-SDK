@@ -12,9 +12,9 @@ import 'package:stargaze_kyc_sdk/src/general/log_helper.dart';
 
 @internal
 abstract class BaseApiRepository with LogHelper {
-  static const networkRequestsTimeout = 60; // 60 seconds
   static const tag = 'BaseApiRepository';
 
+  static const networkRequestsTimeout = 180;
   static const defaultTimeout = Duration(seconds: networkRequestsTimeout);
 
   final ApiBaseRepositoryImpl _apiBaseRepository;

@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kyc/general/constants.dart';
 import 'package:kyc/screens/document_info_screen.dart';
+import 'package:kyc/screens/face_info_screen.dart';
 import 'package:stargaze_kyc_sdk/stargaze_kyc_sdk.dart' as kyc_sdk;
 
 class ConfigScreen extends StatefulWidget {
@@ -178,6 +179,25 @@ class _ConfigScreenState extends State<ConfigScreen> {
                       ),
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 8),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text('Check Face'),
+                          ],
+                        ),
+                        onPressed: () {
+                          if (_screenStatus == ScreenStatus.content) {
+                            _checkFace();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -263,6 +283,34 @@ class _ConfigScreenState extends State<ConfigScreen> {
         });
       });
     }
+  }
+
+  Future<void> _checkFace() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentInProgress;
+      });
+
+      _kycSdk.getFaceInfo(faceFile: File(image.path)).then((value) {
+        _openFaceInfo(value);
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
+  }
+
+  void _openFaceInfo(kyc_sdk.FaceInfo info) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => FaceInfoScreen(faceInfo: info),
+      ),
+    );
   }
 
   void _openDocumentInfo(kyc_sdk.DocumentInfo info) {
