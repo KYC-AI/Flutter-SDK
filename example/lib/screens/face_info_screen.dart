@@ -40,6 +40,22 @@ class _StepScreenState extends State<FaceInfoScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (widget.faceInfo.content != null) ...[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: const Text(
+                'Face image:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 16, right: 16),
+              child: widget.faceInfo.content,
+            ),
+          ],
+
           if (widget.faceInfo.brightness != null) ...[
             Container(
               alignment: Alignment.centerLeft,
