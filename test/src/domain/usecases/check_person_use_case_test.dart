@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stargaze_kyc_sdk/src/domain/exception/face_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/check_person_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
@@ -40,13 +39,10 @@ void main() {
 
       // test
       final underTest = getIt<CheckPersonUseCase>();
+      final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, documentUrl: urlDocument, faceUrl: urlFace);
 
-      try {
-        await underTest.execute(documentCode: DocumentCode.uaIdCard, documentUrl: urlDocument, faceUrl: urlFace);
-        fail("FaceException.resolutionLow not thrown");
-      } catch (e) {
-        expect(e, isInstanceOf<FaceException>());
-      }
+      // check
+      expect(result, equals(false));
     });
   });
 }

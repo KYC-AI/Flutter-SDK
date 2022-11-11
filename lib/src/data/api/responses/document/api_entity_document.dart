@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_face_document.dart';
+import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_field.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_location_document.dart';
-import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_visual_fields.dart';
 
 part 'api_entity_document.g.dart';
 
@@ -23,7 +23,7 @@ class ApiEntityDocument {
   final ApiEntityFace? face;
 
   @JsonKey(name: 'visual_fields')
-  final ApiEntityVisualFields? visualFields;
+  final List<ApiEntityField>? visualFields;
 
   ApiEntityDocument({
     required this.fake,

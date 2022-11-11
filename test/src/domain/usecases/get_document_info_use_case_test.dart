@@ -20,7 +20,7 @@ void main() {
       expect(result.brightness, isNot(null));
       expect(result.content, isNot(null));
       expect(result.fields, isNot(null));
-      expect(result.fields!.length, equals(8));
+      expect(result.fields!.length, equals(10));
       expect(result.location, isNot(null));
       expect(result.face, isNot(null));
     });

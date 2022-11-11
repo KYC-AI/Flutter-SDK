@@ -18,10 +18,9 @@ ApiEntityDocument _$ApiEntityDocumentFromJson(Map<String, dynamic> json) =>
       face: json['face'] == null
           ? null
           : ApiEntityFace.fromJson(json['face'] as Map<String, dynamic>),
-      visualFields: json['visual_fields'] == null
-          ? null
-          : ApiEntityVisualFields.fromJson(
-              json['visual_fields'] as Map<String, dynamic>),
+      visualFields: (json['visual_fields'] as List<dynamic>?)
+          ?.map((e) => ApiEntityField.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ApiEntityDocumentToJson(ApiEntityDocument instance) =>

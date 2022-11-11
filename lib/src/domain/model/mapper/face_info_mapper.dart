@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/face/api_entity_face.dart';
@@ -7,6 +10,8 @@ import 'package:stargaze_kyc_sdk/src/domain/model/mapper/base/mapper.dart';
 @LazySingleton()
 @internal
 class FaceInfoMapper extends Mapper<ApiEntityFace, FaceInfo> {
+  final _base64Decoder = Base64Decoder();
+
   @override
   FaceInfo map(ApiEntityFace value) {
     FaceLocations? location;
@@ -52,6 +57,7 @@ class FaceInfoMapper extends Mapper<ApiEntityFace, FaceInfo> {
       spoofing: spoofing,
       landmarks: landmarks,
       representation: representation,
+      content: value.content != null ? Image.memory(_base64Decoder.convert(value.content!)) : null,
     );
   }
 }

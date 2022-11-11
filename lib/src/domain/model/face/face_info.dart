@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 class FaceInfo {
   final double? brightness;
 
@@ -11,6 +13,8 @@ class FaceInfo {
 
   final FaceRepresentation? representation;
 
+  final Image? content;
+
   FaceInfo({
     required this.brightness,
     required this.rotationAngle,
@@ -18,6 +22,7 @@ class FaceInfo {
     required this.spoofing,
     required this.landmarks,
     required this.representation,
+    required this.content,
   });
 }
 

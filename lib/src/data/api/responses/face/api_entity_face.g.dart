@@ -26,6 +26,7 @@ ApiEntityFace _$ApiEntityFaceFromJson(Map<String, dynamic> json) =>
           ? null
           : ApiEntityFaceLandmarks.fromJson(
               json['landmarks'] as Map<String, dynamic>),
+      content: json['content'] as String?,
     );
 
 Map<String, dynamic> _$ApiEntityFaceToJson(ApiEntityFace instance) =>
@@ -36,4 +37,5 @@ Map<String, dynamic> _$ApiEntityFaceToJson(ApiEntityFace instance) =>
       'representation': instance.representation,
       'spoofing': instance.spoofing,
       'landmarks': instance.landmarks,
+      'content': instance.content,
     };

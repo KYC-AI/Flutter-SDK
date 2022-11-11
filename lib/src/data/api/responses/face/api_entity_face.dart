@@ -28,6 +28,9 @@ class ApiEntityFace {
   @JsonKey(name: 'landmarks')
   final ApiEntityFaceLandmarks? landmarks;
 
+  @JsonKey(name: 'content')
+  final String? content;
+
   ApiEntityFace({
     required this.location,
     required this.brightness,
@@ -35,6 +38,7 @@ class ApiEntityFace {
     required this.representation,
     required this.spoofing,
     required this.landmarks,
+    required this.content,
   });
 
   factory ApiEntityFace.fromJson(Map<String, dynamic> json) => _$ApiEntityFaceFromJson(json);

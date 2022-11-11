@@ -39,151 +39,14 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
     }
 
     if (value.visualFields != null) {
-      fields = [];
-
-      if (value.visualFields!.gender != null) {
-        fields.add(DocumentField(
-          key: 'gender',
-          value: value.visualFields!.gender!.value,
-          confidence: value.visualFields!.gender!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.expirationDate != null) {
-        fields.add(DocumentField(
-          key: 'expirationDate',
-          value: value.visualFields!.expirationDate!.value,
-          confidence: value.visualFields!.expirationDate!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.dob != null) {
-        fields.add(DocumentField(
-          key: 'dob',
-          value: value.visualFields!.dob!.value,
-          confidence: value.visualFields!.dob!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.recordNumber != null) {
-        fields.add(DocumentField(
-          key: 'recordNumber',
-          value: value.visualFields!.recordNumber!.value,
-          confidence: value.visualFields!.recordNumber!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.documentNumber != null) {
-        fields.add(DocumentField(
-          key: 'documentNumber',
-          value: value.visualFields!.documentNumber!.value,
-          confidence: value.visualFields!.documentNumber!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.middleNameUk != null) {
-        fields.add(DocumentField(
-          key: 'middleNameUk',
-          value: value.visualFields!.middleNameUk!.value,
-          confidence: value.visualFields!.middleNameUk!.confidence,
-          language: DocumentFiledLanguage.uk,
-        ));
-      }
-
-      if (value.visualFields!.lastNameEn != null) {
-        fields.add(DocumentField(
-          key: 'lastNameEn',
-          value: value.visualFields!.lastNameEn!.value,
-          confidence: value.visualFields!.lastNameEn!.confidence,
-          language: DocumentFiledLanguage.en,
-        ));
-      }
-
-      if (value.visualFields!.lastNameUk != null) {
-        fields.add(DocumentField(
-          key: 'lastNameUk',
-          value: value.visualFields!.lastNameUk!.value,
-          confidence: value.visualFields!.lastNameUk!.confidence,
-          language: DocumentFiledLanguage.uk,
-        ));
-      }
-
-      if (value.visualFields!.firstNameEn != null) {
-        fields.add(DocumentField(
-          key: 'firstNameEn',
-          value: value.visualFields!.firstNameEn!.value,
-          confidence: value.visualFields!.firstNameEn!.confidence,
-          language: DocumentFiledLanguage.en,
-        ));
-      }
-
-      if (value.visualFields!.firstNameUk != null) {
-        fields.add(DocumentField(
-          key: 'firstNameUk',
-          value: value.visualFields!.firstNameUk!.value,
-          confidence: value.visualFields!.firstNameUk!.confidence,
-          language: DocumentFiledLanguage.uk,
-        ));
-      }
-
-      if (value.visualFields!.issueDate != null) {
-        fields.add(DocumentField(
-          key: 'issueDate',
-          value: value.visualFields!.issueDate!.value,
-          confidence: value.visualFields!.issueDate!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.authority != null) {
-        fields.add(DocumentField(
-          key: 'authority',
-          value: value.visualFields!.authority!.value,
-          confidence: value.visualFields!.authority!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.taxNumber != null) {
-        fields.add(DocumentField(
-          key: 'taxNumber',
-          value: value.visualFields!.taxNumber!.value,
-          confidence: value.visualFields!.taxNumber!.confidence,
-          language: DocumentFiledLanguage.none,
-        ));
-      }
-
-      if (value.visualFields!.placeOfBirthUk != null) {
-        fields.add(DocumentField(
-          key: 'placeOfBirthUk',
-          value: value.visualFields!.placeOfBirthUk!.value,
-          confidence: value.visualFields!.placeOfBirthUk!.confidence,
-          language: DocumentFiledLanguage.uk,
-        ));
-      }
-
-      if (value.visualFields!.placeOfBirthEn != null) {
-        fields.add(DocumentField(
-          key: 'placeOfBirthEn',
-          value: value.visualFields!.placeOfBirthEn!.value,
-          confidence: value.visualFields!.placeOfBirthEn!.confidence,
-          language: DocumentFiledLanguage.en,
-        ));
-      }
-
-      if (value.visualFields!.nationalityEn != null) {
-        fields.add(DocumentField(
-          key: 'nationalityEn',
-          value: value.visualFields!.nationalityEn!.value,
-          confidence: value.visualFields!.nationalityEn!.confidence,
-          language: DocumentFiledLanguage.en,
-        ));
-      }
+      fields = value.visualFields!
+          .map((e) => DocumentField(
+                key: e.field,
+                value: e.value,
+                confidence: e.confidence,
+                language: _mapLanguage(e.lang),
+              ))
+          .toList();
     }
 
     return DocumentInfo(
@@ -193,5 +56,17 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
       location: location,
       face: face,
     );
+  }
+
+  DocumentFiledLanguage _mapLanguage(String? value) {
+    if (value == 'en') {
+      return DocumentFiledLanguage.en;
+    }
+
+    if (value == 'uk') {
+      return DocumentFiledLanguage.uk;
+    }
+
+    return DocumentFiledLanguage.none;
   }
 }
