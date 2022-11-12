@@ -45,6 +45,6 @@ class GetFaceInfoUseCase {
       throw KycSdkException.unknown;
     }
 
-    return _faceInfoMapper.map(result.face!);
+    return _faceInfoMapper.map(value: result.face!);
   }
 }

@@ -9,6 +9,7 @@ import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';
+import 'package:stargaze_kyc_sdk/src/domain/usecases/check_person_from_document_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/check_person_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_face_info_use_case.dart';
@@ -26,6 +27,7 @@ class KycSdk {
   late final _checkPersonUseCase;
   late final _getDocumentInfoUseCase;
   late final _getFaceInfoUseCase;
+  late final _checkPersonFromDocumentUseCase;
 
   Future<void> initialize() async {
     try {
@@ -49,6 +51,7 @@ class KycSdk {
     _checkPersonUseCase = getIt<CheckPersonUseCase>();
     _getDocumentInfoUseCase = getIt<GetDocumentInfoUseCase>();
     _getFaceInfoUseCase = getIt<GetFaceInfoUseCase>();
+    _checkPersonFromDocumentUseCase = getIt<CheckPersonFromDocumentUseCase>();
 
     return Future.value();
   }
@@ -64,6 +67,18 @@ class KycSdk {
       documentCode: documentCode,
       documentFile: documentFile,
       documentUrl: documentUrl,
+      faceFile: faceFile,
+      faceUrl: faceUrl,
+    );
+  }
+
+  Future<bool> checkPersonFromDocument({
+    required DocumentInfo documentInfo,
+    File? faceFile,
+    String? faceUrl,
+  }) {
+    return _checkPersonFromDocumentUseCase.execute(
+      documentInfo: documentInfo,
       faceFile: faceFile,
       faceUrl: faceUrl,
     );

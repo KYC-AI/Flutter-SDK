@@ -50,6 +50,6 @@ class GetDocumentInfoUseCase {
       throw KycSdkException.unknown;
     }
 
-    return _documentInfoMapper.map(result.document!);
+    return _documentInfoMapper.map(value: result.document!, type: documentCode);
   }
 }

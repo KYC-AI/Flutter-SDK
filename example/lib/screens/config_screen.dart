@@ -394,7 +394,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
   void _openDocumentInfo(kyc_sdk.DocumentInfo info) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => DocumentInfoScreen(documentInfo: info),
+        builder: (BuildContext context) => DocumentInfoScreen(kycSdk: _kycSdk, documentInfo: info),
       ),
     );
   }

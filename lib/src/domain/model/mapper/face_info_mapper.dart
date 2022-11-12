@@ -9,11 +9,11 @@ import 'package:stargaze_kyc_sdk/src/domain/model/mapper/base/mapper.dart';
 
 @LazySingleton()
 @internal
-class FaceInfoMapper extends Mapper<ApiEntityFace, FaceInfo> {
+class FaceInfoMapper extends Mapper2<ApiEntityFace, FaceInfo> {
   final _base64Decoder = Base64Decoder();
 
   @override
-  FaceInfo map(ApiEntityFace value) {
+  FaceInfo map({required ApiEntityFace value}) {
     FaceLocations? location;
     FaceSpoofing? spoofing;
     FaceLandmarks? landmarks;

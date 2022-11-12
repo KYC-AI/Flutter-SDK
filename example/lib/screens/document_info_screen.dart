@@ -1,12 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stargaze_kyc_sdk/stargaze_kyc_sdk.dart' as kyc_sdk;
 
 class DocumentInfoScreen extends StatefulWidget {
   static const tag = 'SplashScreen';
 
+  final kyc_sdk.KycSdk kycSdk;
   final kyc_sdk.DocumentInfo documentInfo;
 
-  const DocumentInfoScreen({super.key, required this.documentInfo});
+  const DocumentInfoScreen({
+    super.key,
+    required this.kycSdk,
+    required this.documentInfo,
+  });
 
   @override
   _StepScreenState createState() {
@@ -15,6 +24,10 @@ class DocumentInfoScreen extends StatefulWidget {
 }
 
 class _StepScreenState extends State<DocumentInfoScreen> {
+  final _picker = ImagePicker();
+
+  ScreenStatus _screenStatus = ScreenStatus.content;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +42,34 @@ class _StepScreenState extends State<DocumentInfoScreen> {
         child: Container(
           margin: const EdgeInsets.all(16),
           child: _buildContent(),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        width: MediaQuery.of(context).size.width / 2,
+        child: ElevatedButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Check with Face'),
+              if (_screenStatus == ScreenStatus.contentFaceCheckProgress) ...[
+                Container(
+                  margin: const EdgeInsets.only(left: 16),
+                  width: 16,
+                  height: 16,
+                  child: const CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                ),
+              ],
+            ],
+          ),
+          onPressed: () {
+            if (_screenStatus != ScreenStatus.contentFaceCheckProgress) {
+              _checkWithFace();
+            }
+          },
         ),
       ),
     );
@@ -210,8 +251,104 @@ class _StepScreenState extends State<DocumentInfoScreen> {
               ),
             ],
           ],
+          const SizedBox(height: 48),
         ],
       ),
     );
   }
+
+  Future<void> _checkWithFace() async {
+    final XFile? image = await _takePhoto();
+
+    if (image != null) {
+      setState(() {
+        _screenStatus = ScreenStatus.contentFaceCheckProgress;
+      });
+
+      widget.kycSdk.checkPersonFromDocument(documentInfo: widget.documentInfo, faceFile: File(image.path)).then((value) {
+        if (value) {
+          _showToast('SUCCESS: Face matches photo on document');
+        } else {
+          _showToast('FAIL: Face not matches photo on document');
+        }
+      }).onError((error, stackTrace) {
+        _showToast('Error: $error');
+      }).whenComplete(() {
+        setState(() {
+          _screenStatus = ScreenStatus.content;
+        });
+      });
+    }
+  }
+
+  void _showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
+  }
+
+  Future<XFile?> _takePhoto() async {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              if (index == 1) {
+                return Container(
+                  margin: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Select File'),
+                        ],
+                      ),
+                      onPressed: () async {
+                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                        Navigator.pop(context, image);
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return Container(
+                  margin: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 8),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Make a photo'),
+                        ],
+                      ),
+                      onPressed: () async {
+                        final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+                        Navigator.pop(context, image);
+                      },
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+enum ScreenStatus {
+  content,
+  contentFaceCheckProgress,
 }
