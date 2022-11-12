@@ -6,6 +6,8 @@ class DocumentInfo {
   final double? brightness;
   final Image? content;
   final List<DocumentField>? fields;
+  final List<DocumentField>? mrzFields;
+  final List<DocumentString>? mrzStrings;
   final DocumentLocation? location;
   final DocumentFace? face;
 
@@ -13,6 +15,8 @@ class DocumentInfo {
     required this.brightness,
     required this.content,
     required this.fields,
+    required this.mrzFields,
+    required this.mrzStrings,
     required this.location,
     required this.face,
   });
@@ -66,6 +70,16 @@ class DocumentField {
     required this.value,
     required this.confidence,
     required this.language,
+  });
+}
+
+class DocumentString {
+  final String value;
+  final double confidence;
+
+  DocumentString({
+    required this.value,
+    required this.confidence,
   });
 }
 

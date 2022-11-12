@@ -21,6 +21,12 @@ ApiEntityDocument _$ApiEntityDocumentFromJson(Map<String, dynamic> json) =>
       visualFields: (json['visual_fields'] as List<dynamic>?)
           ?.map((e) => ApiEntityField.fromJson(e as Map<String, dynamic>))
           .toList(),
+      mrzFields: (json['mrz_fields'] as List<dynamic>?)
+          ?.map((e) => ApiEntityField.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      mrzStrings: (json['mrz_strings'] as List<dynamic>?)
+          ?.map((e) => ApiEntityString.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ApiEntityDocumentToJson(ApiEntityDocument instance) =>
@@ -31,4 +37,6 @@ Map<String, dynamic> _$ApiEntityDocumentToJson(ApiEntityDocument instance) =>
       'location': instance.location,
       'face': instance.face,
       'visual_fields': instance.visualFields,
+      'mrz_fields': instance.mrzFields,
+      'mrz_strings': instance.mrzStrings,
     };

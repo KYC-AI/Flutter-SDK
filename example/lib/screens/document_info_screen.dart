@@ -152,6 +152,64 @@ class _StepScreenState extends State<DocumentInfoScreen> {
               ),
             ],
           ],
+          if (widget.documentInfo.mrzFields != null) ...[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: const Text(
+                'MRZ Fields:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            for (final item in widget.documentInfo.mrzFields!) ...[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 16, top: 8, bottom: 8, right: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${item.key}: ',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${item.value} (${item.confidence.toStringAsFixed(4)})',
+                        maxLines: 3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+          if (widget.documentInfo.mrzStrings != null) ...[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: const Text(
+                'MRZ Strings:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            for (final item in widget.documentInfo.mrzStrings!) ...[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 16, top: 8, bottom: 8, right: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${item.value} (${item.confidence.toStringAsFixed(4)})',
+                        maxLines: 3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
         ],
       ),
     );

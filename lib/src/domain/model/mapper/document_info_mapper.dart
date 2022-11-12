@@ -18,6 +18,8 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
     DocumentLocation? location;
     DocumentFace? face;
     List<DocumentField>? fields;
+    List<DocumentField>? mrzFields;
+    List<DocumentString>? mrzStrings;
 
     if (value.location != null) {
       location = DocumentLocation(
@@ -49,12 +51,34 @@ class DocumentInfoMapper extends Mapper<ApiEntityDocument, DocumentInfo> {
           .toList();
     }
 
+    if (value.mrzFields != null) {
+      mrzFields = value.mrzFields!
+          .map((e) => DocumentField(
+                key: e.field,
+                value: e.value,
+                confidence: e.confidence,
+                language: _mapLanguage(e.lang),
+              ))
+          .toList();
+    }
+
+    if (value.mrzStrings != null) {
+      mrzStrings = value.mrzStrings!
+          .map((e) => DocumentString(
+                value: e.value,
+                confidence: e.confidence,
+              ))
+          .toList();
+    }
+
     return DocumentInfo(
       brightness: value.brightness,
       content: value.content != null ? Image.memory(_base64Decoder.convert(value.content!)) : null,
       fields: fields,
+      mrzFields: mrzFields,
       location: location,
       face: face,
+      mrzStrings: mrzStrings,
     );
   }
 

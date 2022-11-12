@@ -6,7 +6,7 @@ import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.
 import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
 
 void main() {
-  group('uaForeignPassport', () {
+  group('usaPassportCard', () {
     test('success from file page 1', () async {
       final dir = Directory.current.path;
       final fileDocument = File(dir + '/test/resources/usa_passport_card_1_page_1.jpg');
@@ -41,6 +41,10 @@ void main() {
       expect(result.content, isNot(null));
       expect(result.fields, isNot(null));
       expect(result.fields!.length, equals(13));
+      expect(result.mrzFields, isNot(null));
+      expect(result.mrzFields!.length, equals(15));
+      expect(result.mrzStrings, isNot(null));
+      expect(result.mrzStrings!.length, equals(2));
       expect(result.location, isNot(null));
       expect(result.face, isNot(null));
     });

@@ -8,7 +8,7 @@ import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependenci
 
 class TestsUtils {
   // Only for testing
-  static const testApplicantId = '133e663f032fbd8f6afd4cb932030d8491ea01d5';
+  static const testApplicantId = '6ba40871fdb130b4b733c89aa8a778932906e23f';
   static const testServer = 'https://api.kycai.pro/v1.0/';
 
   static Future<void> initializeMock() async {
