@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.dart';
-import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
+import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
 void main() {
   group('usaPassportCard', () {

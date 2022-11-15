@@ -8,7 +8,7 @@ import 'package:stargaze_kyc_sdk/src/domain/model/face/face_check.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/mapper/face_info_mapper.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/api/api_verification_repository.dart';
-import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
+import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
 @LazySingleton()
 @internal

@@ -13,7 +13,7 @@ import 'package:stargaze_kyc_sdk/src/domain/usecases/check_person_from_document_
 import 'package:stargaze_kyc_sdk/src/domain/usecases/check_person_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_face_info_use_case.dart';
-import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
+import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
 class KycSdk {
   static const tag = 'KycSdk';

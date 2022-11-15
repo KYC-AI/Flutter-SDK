@@ -35,9 +35,7 @@ class ApiVerificationRepositoryImpl extends BaseApiRepository with LogHelper imp
     required List<DocumentCheck> checks,
     required int page,
   }) async {
-    // TODO: should be change prod deploy
-    //final String url = getApiUrl('documents/');
-    final String url = 'https://3citwyht5i.execute-api.eu-central-1.amazonaws.com/stage/document-api-stage';
+    final String url = getApiUrl('documents');
     tLog.d(tag, 'checkDocumentFile, url: $url');
 
     final Map<String, dynamic> body = {
@@ -70,9 +68,7 @@ class ApiVerificationRepositoryImpl extends BaseApiRepository with LogHelper imp
     required List<DocumentCheck> checks,
     required int page,
   }) async {
-    // TODO: should be change prod deploy
-    //final String url = getApiUrl('documents/');
-    final String url = 'https://3citwyht5i.execute-api.eu-central-1.amazonaws.com/stage/document-api-stage';
+    final String url = getApiUrl('documents');
     tLog.d(tag, 'checkDocumentUrl, url: $url');
 
     final Map<String, dynamic> body = {
@@ -103,9 +99,7 @@ class ApiVerificationRepositoryImpl extends BaseApiRepository with LogHelper imp
     required File file,
     required List<FaceCheck> checks,
   }) async {
-    // TODO: should be change prod deploy
-    //final String url = getApiUrl('faces/');
-    final String url = 'https://a0el9k92z4.execute-api.eu-central-1.amazonaws.com/stage/face-api-stage';
+    final String url = getApiUrl('faces');
     tLog.d(tag, 'checkFaceFile, url: $url');
 
     final Map<String, dynamic> body = {
@@ -134,9 +128,7 @@ class ApiVerificationRepositoryImpl extends BaseApiRepository with LogHelper imp
     required String faceUrl,
     required List<FaceCheck> checks,
   }) async {
-    // TODO: should be change prod deploy
-    //final String url = getApiUrl('faces/');
-    final String url = 'https://a0el9k92z4.execute-api.eu-central-1.amazonaws.com/stage/face-api-stage';
+    final String url = getApiUrl('faces');
     tLog.d(tag, 'checkFaceUrl, url: $url');
 
     final Map<String, dynamic> body = {
@@ -162,9 +154,7 @@ class ApiVerificationRepositoryImpl extends BaseApiRepository with LogHelper imp
 
   @override
   Future<ApiEntityCheckFace> checkFaceBase64({required String base64, required List<FaceCheck> checks}) async {
-    // TODO: should be change prod deploy
-    //final String url = getApiUrl('faces/');
-    final String url = 'https://a0el9k92z4.execute-api.eu-central-1.amazonaws.com/stage/face-api-stage';
+    final String url = getApiUrl('faces');
     tLog.d(tag, 'checkFaceBase64, url: $url');
 
     final Map<String, dynamic> body = {

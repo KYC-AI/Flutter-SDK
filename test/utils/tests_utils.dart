@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/config.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';
-import 'package:stargaze_kyc_sdk/src/presentation/injection/configure_dependencies.dart';
+import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
 class TestsUtils {
   // Only for testing
