@@ -21,6 +21,8 @@ dependencies:
   json_serializable: 6.5.4
   ml_linalg: 13.10.0
 
+dependency_overrides:
+  analyzer: 4.7.0
 
 dev_dependencies:
   flutter_test:

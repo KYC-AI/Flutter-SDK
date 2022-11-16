@@ -21,7 +21,9 @@ dependencies:
   stargaze_kyc_sdk:
     path: ../
 
-
+dependency_overrides:
+  analyzer: 4.7.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
