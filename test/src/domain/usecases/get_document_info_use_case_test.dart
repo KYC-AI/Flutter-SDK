@@ -50,6 +50,30 @@ void main() {
     });
   });
 
+  group('uaForeignPassport resized', () {
+    test('success from file', () async {
+      final dir = Directory.current.path;
+      final fileDocument = File(dir + '/test/resources/ua_foreign_passport_1_resized.jpg');
+
+      // test
+      final underTest = getIt<GetDocumentInfoUseCase>();
+      final result = await underTest.execute(documentCode: DocumentCode.uaForeignPassport, page: 1, documentFile: fileDocument);
+
+      // check
+      expect(result, isNot(null));
+      expect(result.brightness, isNot(null));
+      expect(result.content, isNot(null));
+      expect(result.fields, isNot(null));
+      expect(result.fields!.length, equals(13));
+      expect(result.mrzFields, isNot(null));
+      expect(result.mrzFields!.length, equals(15));
+      expect(result.mrzStrings, isNot(null));
+      expect(result.mrzStrings!.length, equals(2));
+      expect(result.location, isNot(null));
+      expect(result.face, isNot(null));
+    });
+  });
+
   group('uaIdCard', () {
     group('GetDocumentInfoUseCase page 1', () {
       test('success from file', () async {
