@@ -5,17 +5,17 @@ import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_document.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/mapper/base/mapper.dart';
 
 @LazySingleton()
 @internal
-class DocumentInfoMapper extends Mapper3<ApiEntityDocument, DocumentInfo, DocumentCode> {
+class DocumentInfoMapper extends Mapper3<ApiEntityDocument, DocumentInfo, DocumentType> {
   final _base64Decoder = Base64Decoder();
 
   @override
-  DocumentInfo map({required ApiEntityDocument value, required DocumentCode type}) {
+  DocumentInfo map({required ApiEntityDocument value, required DocumentType type}) {
     DocumentLocation? location;
     DocumentFace? face;
     List<DocumentField>? fields;

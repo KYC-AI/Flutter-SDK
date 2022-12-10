@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'api_entity_field.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityField {
   @JsonKey(name: 'field')
   final String field;

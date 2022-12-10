@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
@@ -13,7 +13,7 @@ void main() {
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.usaPassportCard, page: 1, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentType.usaPassportCard, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
@@ -33,7 +33,7 @@ void main() {
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaForeignPassport, page: 1, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentType.uaForeignPassport, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
@@ -57,7 +57,7 @@ void main() {
 
       // test
       final underTest = getIt<GetDocumentInfoUseCase>();
-      final result = await underTest.execute(documentCode: DocumentCode.uaForeignPassport, page: 1, documentFile: fileDocument);
+      final result = await underTest.execute(documentCode: DocumentType.uaForeignPassport, page: 1, documentFile: fileDocument);
 
       // check
       expect(result, isNot(null));
@@ -82,7 +82,7 @@ void main() {
 
         // test
         final underTest = getIt<GetDocumentInfoUseCase>();
-        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
+        final result = await underTest.execute(documentCode: DocumentType.uaIdCard, page: 1, documentFile: fileDocument);
 
         // check
         expect(result, isNot(null));
@@ -100,7 +100,7 @@ void main() {
 
         // test
         final underTest = getIt<GetDocumentInfoUseCase>();
-        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentFile: fileDocument);
+        final result = await underTest.execute(documentCode: DocumentType.uaIdCard, page: 1, documentFile: fileDocument);
 
         // check
         expect(result, isNot(null));
@@ -117,7 +117,7 @@ void main() {
 
         // test
         final underTest = getIt<GetDocumentInfoUseCase>();
-        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 1, documentUrl: urlDocument);
+        final result = await underTest.execute(documentCode: DocumentType.uaIdCard, page: 1, documentUrl: urlDocument);
 
         // check
         expect(result, isNot(null));
@@ -137,7 +137,7 @@ void main() {
 
         // test
         final underTest = getIt<GetDocumentInfoUseCase>();
-        final result = await underTest.execute(documentCode: DocumentCode.uaIdCard, page: 2, documentFile: fileDocument);
+        final result = await underTest.execute(documentCode: DocumentType.uaIdCard, page: 2, documentFile: fileDocument);
 
         // check
         expect(result, isNot(null));

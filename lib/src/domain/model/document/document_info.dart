@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 
 class DocumentInfo {
-  final DocumentCode documentCode;
+  final DocumentType documentCode;
   final double? brightness;
   final Image? content;
   final List<DocumentField>? fields;

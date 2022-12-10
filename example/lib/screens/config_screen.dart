@@ -291,7 +291,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.contentInProgress;
       });
 
-      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaForeignPassport, page: 1, documentFile: File(image.path)).then((value) {
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentType.uaForeignPassport, page: 1, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');
@@ -311,7 +311,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.contentInProgress;
       });
 
-      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.usaPassportCard, page: 1, documentFile: File(image.path)).then((value) {
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentType.usaPassportCard, page: 1, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');
@@ -331,7 +331,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.contentInProgress;
       });
 
-      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, page: 1, documentFile: File(image.path)).then((value) {
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentType.uaIdCard, page: 1, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');
@@ -351,7 +351,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
         _screenStatus = ScreenStatus.contentInProgress;
       });
 
-      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentCode.uaIdCard, page: 2, documentFile: File(image.path)).then((value) {
+      _kycSdk.getDocumentInfo(documentCode: kyc_sdk.DocumentType.uaIdCard, page: 2, documentFile: File(image.path)).then((value) {
         _openDocumentInfo(value);
       }).onError((error, stackTrace) {
         _showToast('Error: $error');

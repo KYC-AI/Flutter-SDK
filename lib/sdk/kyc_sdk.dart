@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/config.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_info.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/general/configure_repository.dart';
@@ -15,6 +15,22 @@ import 'package:stargaze_kyc_sdk/src/domain/usecases/get_document_info_use_case.
 import 'package:stargaze_kyc_sdk/src/domain/usecases/get_face_info_use_case.dart';
 import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
 
+/// KYC SKD
+/// To initialize sdk need define [Config], create instance KycSdk and call [initialize()]
+/// Initialization might look like this
+///
+/// ```dart
+/// import 'package:stargaze_kyc_sdk/stargaze_kyc_sdk.dart' as kyc_sdk;
+///
+/// ....
+///
+/// final config = kyc_sdk.Config(apiToken: Constants.apiToken, server: Constants.server);
+/// final kycSdk = kyc_sdk.KycSdk(config: config);
+/// await kycSdk.initialize()
+///
+/// .....
+///
+/// ```
 class KycSdk {
   static const tag = 'KycSdk';
 
@@ -29,6 +45,7 @@ class KycSdk {
   late final _getFaceInfoUseCase;
   late final _checkPersonFromDocumentUseCase;
 
+  /// Intended to initialize sdk and should be call before usage any methods of sdk.
   Future<void> initialize() async {
     try {
       if (!_getItInitialized) {
@@ -56,15 +73,28 @@ class KycSdk {
     return Future.value();
   }
 
+  /// Method intended to check whether face matches with face on document.
+  ///
+  /// [documentType] - type of document
+  /// [documentFile] - image file that contains document
+  /// [documentUrl] - url to document image
+  /// [faceFile] - image file that contains document
+  /// [faceUrl] - url to face image
+  ///
+  /// Method requires passing one resource with document ([documentCode] or [documentFile])
+  /// and one with photo ([faceFile] or [faceUrl])
+  ///
+  /// Result return [bool] value that mean whether match face with face on document. true - if YES, false for NO
+  ///
   Future<bool> checkPerson({
-    required DocumentCode documentCode,
+    required DocumentType documentType,
     File? documentFile,
     String? documentUrl,
     File? faceFile,
     String? faceUrl,
   }) {
     return _checkPersonUseCase.execute(
-      documentCode: documentCode,
+      documentType: documentType,
       documentFile: documentFile,
       documentUrl: documentUrl,
       faceFile: faceFile,
@@ -72,6 +102,16 @@ class KycSdk {
     );
   }
 
+  /// Method intended to check whether face matches with face on document.
+  ///
+  /// [documentInfo] - document info that was got using method [getDocumentInfo]
+  /// [faceFile] - image file that contains document
+  /// [faceUrl] - url to face image
+  ///
+  /// Method requires passing one resource with photo ([faceFile] or [faceUrl])
+  ///
+  /// Result return [bool] value that mean whether match face with face on document. true - if YES, false for NO
+  ///
   Future<bool> checkPersonFromDocument({
     required DocumentInfo documentInfo,
     File? faceFile,
@@ -84,6 +124,15 @@ class KycSdk {
     );
   }
 
+  /// Method intended to parse info about face from photo
+  ///
+  /// [faceFile] - image file that contains document
+  /// [faceUrl] - url to face image
+  ///
+  /// Method requires passing one resource with photo ([faceFile] or [faceUrl])
+  ///
+  /// Result return instance of [FaceInfo] that contains details about face
+  ///
   Future<FaceInfo> getFaceInfo({
     File? faceFile,
     String? faceUrl,
@@ -91,8 +140,18 @@ class KycSdk {
     return _getFaceInfoUseCase.execute(faceFile: faceFile, faceUrl: faceUrl);
   }
 
+  /// Method intended to parse info about document from photo
+  ///
+  /// [documentType] - type of document
+  /// [documentFile] - image file that contains document
+  /// [documentUrl] - url to document image
+  ///
+  /// Method requires passing one resource with document ([documentCode] or [documentFile])
+  ///
+  /// Result return instance of [DocumentInfo] that contains details about document
+  ///
   Future<DocumentInfo> getDocumentInfo({
-    required DocumentCode documentCode,
+    required DocumentType documentCode,
     required int page,
     File? documentFile,
     String? documentUrl,

@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_field.dart';
 
 part 'api_entity_visual_fields.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityVisualFields {
   @JsonKey(name: 'first_name_uk')
   final ApiEntityField? firstNameUk;

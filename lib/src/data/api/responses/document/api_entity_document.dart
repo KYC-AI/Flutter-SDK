@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_face_document.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_field.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_location_document.dart';
@@ -7,6 +8,7 @@ import 'package:stargaze_kyc_sdk/src/data/api/responses/document/api_entity_stri
 part 'api_entity_document.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityDocument {
   @JsonKey(name: 'fake')
   final String? fake;

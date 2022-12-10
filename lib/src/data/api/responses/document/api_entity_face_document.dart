@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:stargaze_kyc_sdk/src/data/api/responses/api_entity_location_face.dart';
 
 part 'api_entity_face_document.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityFace {
   @JsonKey(name: 'location')
   final ApiEntityLocationFace location;

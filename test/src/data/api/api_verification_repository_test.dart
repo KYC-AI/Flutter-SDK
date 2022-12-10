@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_check.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_check.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/api/api_verification_repository.dart';
 import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
@@ -17,7 +17,7 @@ void main() {
       final underTest = getIt<ApiVerificationRepository>();
       final result = await underTest.checkDocumentFile(
         file: file,
-        code: DocumentCode.uaIdCard,
+        code: DocumentType.uaIdCard,
         checks: [
           DocumentCheck.visualFields,
           DocumentCheck.mrzFields,
@@ -45,7 +45,7 @@ void main() {
       final underTest = getIt<ApiVerificationRepository>();
       final result = await underTest.checkDocumentUrl(
         documentUrl: documentUrl,
-        code: DocumentCode.uaIdCard,
+        code: DocumentType.uaIdCard,
         checks: [
           DocumentCheck.visualFields,
           DocumentCheck.mrzFields,

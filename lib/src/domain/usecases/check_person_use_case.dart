@@ -7,7 +7,7 @@ import 'package:stargaze_kyc_sdk/src/domain/exception/document_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/face_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/exception/kyc_sdk_exception.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/document/document_check.dart';
-import 'package:stargaze_kyc_sdk/src/domain/model/document/document_code.dart';
+import 'package:stargaze_kyc_sdk/src/domain/model/document/document_type.dart';
 import 'package:stargaze_kyc_sdk/src/domain/model/face/face_check.dart';
 import 'package:stargaze_kyc_sdk/src/domain/repository/api/api_verification_repository.dart';
 import 'package:stargaze_kyc_sdk/src/di/configure_dependencies.dart';
@@ -18,7 +18,7 @@ class CheckPersonUseCase {
   final _apiVerificationRepository = getIt<ApiVerificationRepository>();
 
   Future<bool> execute({
-    required DocumentCode documentCode,
+    required DocumentType documentType,
     File? documentFile,
     String? documentUrl,
     File? faceFile,
@@ -38,8 +38,8 @@ class CheckPersonUseCase {
 
     // 1. Check document photo
     final documentResult = documentFile != null
-        ? await _apiVerificationRepository.checkDocumentFile(file: documentFile, code: documentCode, checks: documentChecks, page: 1)
-        : await _apiVerificationRepository.checkDocumentUrl(documentUrl: documentUrl!, code: documentCode, checks: documentChecks, page: 1);
+        ? await _apiVerificationRepository.checkDocumentFile(file: documentFile, code: documentType, checks: documentChecks, page: 1)
+        : await _apiVerificationRepository.checkDocumentUrl(documentUrl: documentUrl!, code: documentType, checks: documentChecks, page: 1);
     final DocumentException documentStatus = DocumentException.values.firstWhere((element) => element.code == documentResult.status);
     if (DocumentException.ok != documentStatus) {
       throw documentStatus;

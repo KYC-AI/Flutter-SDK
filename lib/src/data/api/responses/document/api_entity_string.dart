@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'api_entity_string.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityString {
-
   @JsonKey(name: 'confidence')
   final double confidence;
 

@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'api_entity_location_document.g.dart';
 
 @JsonSerializable()
+@internal
 class ApiEntityLocationDocument {
   @JsonKey(name: 'top_left', defaultValue: [0.0, 0.0])
   final List<double> topLeft;
